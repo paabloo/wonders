@@ -1,8 +1,11 @@
 import React from 'react';
+import MainMenuContainer from '../containers/MainMenuContainer';
 
 const Home = () => {
     return (
-        <div>watch again Homeeee!</div>
+        <div>
+            <MainMenuContainer />
+        </div>
     );
 }
 

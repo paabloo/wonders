@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import dummyReducer from './reducers/dummyReducer';
+import playersReducer from './reducers/playersReducer';
+import gameReducer from './reducers/gameReducer';
+import deckCardsReducer from './reducers/usageElements/deckCards';
 
 const combinedReducers = combineReducers({
-  dummy: dummyReducer,
+    game: gameReducer,
+    players: playersReducer,
+    deckCards: deckCardsReducer,
 });
 
 export default combinedReducers;

@@ -1,6 +1,6 @@
 {
   "name": "react-wonders",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "7 Wonders Duel BoardGame",
   "main": "index.js",
   "scripts": {
