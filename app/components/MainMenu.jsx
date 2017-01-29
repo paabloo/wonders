@@ -11,9 +11,9 @@ const MainMenu = (props) => {
     };
 
     return (
-        <div className="btn-group-vertical">
-            {props.gameInProgress ? <Link to="/game" className="btn btn-info">Wznów grę</Link> : null}
-            <button className="btn btn-success" onClick={onNewGameClick}>Nowa gra</button>
+        <div className="col-md-6 col-md-offset-3">
+            {props.gameInProgress ? <Link to="/game" className="btn btn-info btn-block">Wznów grę</Link> : null}
+            <button className="btn btn-success btn-block" onClick={onNewGameClick}>Nowa gra</button>
         </div>
     );
 };

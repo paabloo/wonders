@@ -2,7 +2,7 @@ import React from 'react';
 import {Router, Route, hashHistory} from 'react-router';
 import store  from '../store/store';
 
-import Home from '../components/home';
+import Home from '../components/Home';
 import AgeContainer from '../containers/AgeContainer';
 
 function onGameEnter(nextState, replace) {

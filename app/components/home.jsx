@@ -3,7 +3,7 @@ import MainMenuContainer from '../containers/MainMenuContainer';
 
 const Home = () => {
     return (
-        <div>
+        <div className="container">
             <MainMenuContainer />
         </div>
     );

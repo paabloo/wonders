@@ -2,7 +2,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: "./app/app",
+    entry: ["./app/app"],
     output: {
         path: "./build/",
         filename: "bundle.js"
@@ -13,11 +13,11 @@ module.exports = {
     devtool: 'source-map',
     devServer: {
         contentBase: "./build",
+        outputPath: path.resolve(__dirname, 'build')
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: __dirname + '/app/index.html',
-            filename: 'index.html',
             inject: 'body'
         })
     ],
@@ -46,7 +46,14 @@ module.exports = {
                 query: {
                     presets: ['es2015', 'react']
                 }
+            },
+            {
+                test: /\.scss$/,
+                loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
             }
         ]
+    },
+    sassLoader: {
+        includePaths: [path.resolve(__dirname, "./app/styles")]
     }
 };
