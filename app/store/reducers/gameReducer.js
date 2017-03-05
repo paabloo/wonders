@@ -16,12 +16,16 @@ export default function (state = initialState, action) {
         case 'START_GAME':
             return Object.assign({}, state, {
                 gameInProgress: true,
-                actualAge: 'age3',
+                actualAge: 'age1',
                 activePlayer: 1
             });
         case 'SWITCH_PLAYER':
             return Object.assign({}, state, {
                 activePlayer: state.activePlayer === 1 ? 2 : 1
+            });
+        case 'NEXT_AGE':
+            return Object.assign({}, state, {
+                actualAge: state.actualAge === 'age1' ? 'age2' : 'age3'
             })
         case 'FILL_DECK_AGE1':
             return Object.assign({}, state, {

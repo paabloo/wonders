@@ -1,3 +1,5 @@
+import { hashHistory } from 'react-router';
+
 export function prepareAgesDecks() {
     return (dispatch, state) => {
         let deckCardsA1 = state().deckCards.age1;
@@ -155,6 +157,28 @@ export function checkDeckCardLock(age) {
     }
 }
 
+export function checkAgeFinish() {
+    return (dispatch, state) => {
+        let finishFlag = true;
+        const { game } = state();
+        const lastRow = game.gameDecks[game.actualAge][0];
+        lastRow.forEach(e => {
+            if (!e.hidden) {
+                finishFlag = false;
+            }
+        });
+        if (finishFlag) {
+            if (game.actualAge === 'age3') {
+                // TODO: implement reducer for this event
+                dispatch({type: 'FINISH_GAME'});
+                hashHistory.push('/summary');
+            } else {
+                dispatch({type: 'NEXT_AGE'});
+            }
+        }
+    }
+}
+
 function getIndexesOfCard(deck, cardId) {
     let indexes = {};
     deck.forEach((row, row_index) => {
@@ -183,6 +207,7 @@ export function sellCard(cardId) {
             col
         }});
         dispatch(checkDeckCardLock(game.actualAge));
+        dispatch(checkAgeFinish());
         dispatch({type: 'SWITCH_PLAYER'});
     }
 }
@@ -198,6 +223,7 @@ export function buyCard(cardId) {
             col
         }});
         dispatch(checkDeckCardLock(game.actualAge));
+        dispatch(checkAgeFinish());
         dispatch({type: 'SWITCH_PLAYER'});
     }
 }
