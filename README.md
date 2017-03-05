@@ -5,4 +5,4 @@
 `npm install`
 
 
-node version `v6.9.4`
+node version `v7.5.0`

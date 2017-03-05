@@ -1,3 +1,5 @@
+import * as ages from '../../constants/ages';
+
 const initialState = {
     gameInProgress: false,
     activePlayer: null,
@@ -16,7 +18,7 @@ export default function (state = initialState, action) {
         case 'START_GAME':
             return Object.assign({}, state, {
                 gameInProgress: true,
-                actualAge: 'age1',
+                actualAge: ages.age1,
                 activePlayer: 1
             });
         case 'SWITCH_PLAYER':
@@ -26,7 +28,7 @@ export default function (state = initialState, action) {
         case 'NEXT_AGE':
             return Object.assign({}, state, {
                 actualAge: state.actualAge === 'age1' ? 'age2' : 'age3'
-            })
+            });
         case 'FILL_DECK_AGE1':
             return Object.assign({}, state, {
                 gameDecks: Object.assign({}, state.gameDecks, {

@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
                 [action.payload.player]: Object.assign({}, state[action.payload.player], {
                     gold: state[action.payload.player].gold + action.payload.amount
                 })
-            })
+            });
         default:
             return state
     }

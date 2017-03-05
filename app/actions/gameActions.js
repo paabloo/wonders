@@ -152,7 +152,7 @@ export function checkDeckCardLock(age) {
                     });
                 });
             }
-        }
+        };
         checkFunctions[age]();
     }
 }
