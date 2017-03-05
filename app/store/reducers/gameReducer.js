@@ -1,4 +1,4 @@
-import * as ages from '../../constants/ages';
+import * as Ages from '../../constants/ages';
 
 const initialState = {
     gameInProgress: false,
@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
         case 'START_GAME':
             return Object.assign({}, state, {
                 gameInProgress: true,
-                actualAge: ages.age1,
+                actualAge: Ages.age3,
                 activePlayer: 1
             });
         case 'SWITCH_PLAYER':
@@ -55,38 +55,32 @@ export default function (state = initialState, action) {
                 ]
             });
         case 'HIDE_CARD':
-            // WTF?!
             return Object.assign({}, state, {
                 gameDecks: Object.assign({}, state.gameDecks, {
-                    [state.actualAge]: [
-                        ...state.gameDecks[state.actualAge].slice(0, action.payload.row),
-                        [
+                    [state.actualAge]: Object.assign({}, state.gameDecks[state.actualAge], {
+                        [action.payload.row]: [
                             ...state.gameDecks[state.actualAge][action.payload.row].slice(0, action.payload.col),
                             Object.assign({}, state.gameDecks[state.actualAge][action.payload.row][action.payload.col], {
                                 hidden: true
                             }),
                             ...state.gameDecks[state.actualAge][action.payload.row].slice(action.payload.col + 1)
-                        ],
-                        ...state.gameDecks[state.actualAge].slice(action.payload.row + 1)
-                    ]
+                        ]
+                    })
                 })
             });
         case 'LOCK_CARD':
-            // WTF2?!
             return Object.assign({}, state, {
                 gameDecks: Object.assign({}, state.gameDecks, {
-                    [action.payload.age]: [
-                        ...state.gameDecks[action.payload.age].slice(0, action.payload.row),
-                        [
+                    [action.payload.age]: Object.assign({}, state.gameDecks[action.payload.age], {
+                        [action.payload.row]: [
                             ...state.gameDecks[action.payload.age][action.payload.row].slice(0, action.payload.col),
                             Object.assign({}, state.gameDecks[action.payload.age][action.payload.row][action.payload.col], {
                                 lock: action.payload.lock,
                                 flip: action.payload.flip === undefined ? state.gameDecks[action.payload.age][action.payload.row][action.payload.col].flip : action.payload.flip
                             }),
                             ...state.gameDecks[action.payload.age][action.payload.row].slice(action.payload.col + 1)
-                        ],
-                        ...state.gameDecks[action.payload.age].slice(action.payload.row + 1)
-                    ]
+                        ]
+                    })
                 })
             });
         default:

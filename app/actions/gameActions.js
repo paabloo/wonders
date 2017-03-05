@@ -1,9 +1,10 @@
+import * as Ages from '../constants/ages';
 import { hashHistory } from 'react-router';
 
 export function prepareAgesDecks() {
     return (dispatch, state) => {
         let deckCardsA1 = state().deckCards.age1;
-        let rowsA1 = [];
+        let rowsA1 = {};
         deckCardsA1 = deckCardsA1.sort(function () {return 0.5 - Math.random()});
         deckCardsA1 = deckCardsA1.slice(0, 20);
         rowsA1[0] = deckCardsA1.slice(0, 2);
@@ -13,7 +14,7 @@ export function prepareAgesDecks() {
         rowsA1[4] = deckCardsA1.slice(14, 20);
         dispatch({type: 'FILL_DECK_AGE1', payload: rowsA1});
         let deckCardsA2 = state().deckCards.age2;
-        let rowsA2 = [];
+        let rowsA2 = {};
         deckCardsA2 = deckCardsA2.sort(function () {return 0.5 - Math.random()});
         deckCardsA2 = deckCardsA2.slice(0, 20);
         rowsA2[0] = deckCardsA2.slice(0, 6);
@@ -24,7 +25,7 @@ export function prepareAgesDecks() {
         dispatch({type: 'FILL_DECK_AGE2', payload: rowsA2});
         let deckCardsA3 = state().deckCards.age3;
         let guildCards = state().deckCards.guilds;
-        let rowsA3 = [];
+        let rowsA3 = {};
         deckCardsA3 = deckCardsA3.sort(function () {return 0.5 - Math.random()});
         guildCards = guildCards.sort(function () {return 0.5 - Math.random()});
         deckCardsA3 = deckCardsA3.slice(0, 17);
@@ -51,13 +52,15 @@ export function checkDeckCardLock(age) {
         const checkFunctions = {
             age1: () => {
                 const deckCards = state().game.gameDecks.age1;
-                deckCards.forEach((row, row_index) => {
+                Object.keys(deckCards).forEach(row_index => {
+                    row_index = +row_index;
+                    const row = deckCards[row_index];
                     row.forEach((card, card_index) => {
                         if ((deckCards[row_index + 1] === undefined) ||
                             (deckCards[row_index + 1][card_index].hidden === true
                             && deckCards[row_index + 1][card_index + 1].hidden === true)) {
                                 dispatch({type: 'LOCK_CARD', payload: {
-                                    age: 'age1',
+                                    age: Ages.age1,
                                     row: row_index,
                                     col: card_index,
                                     lock: false,
@@ -65,7 +68,7 @@ export function checkDeckCardLock(age) {
                                 }});
                         } else {
                             dispatch({type: 'LOCK_CARD', payload: {
-                                age: 'age1',
+                                age: Ages.age1,
                                 row: row_index,
                                 col: card_index,
                                 lock: true
@@ -76,7 +79,9 @@ export function checkDeckCardLock(age) {
             },
             age2: () => {
                 const deckCards = state().game.gameDecks.age2;
-                deckCards.forEach((row, row_index) => {
+                Object.keys(deckCards).forEach(row_index => {
+                    row_index = +row_index;
+                    const row = deckCards[row_index];
                     row.forEach((card, card_index) => {
                         let nextUndefined = deckCards[row_index + 1] === undefined;
                         let thisMinusOne = !nextUndefined ? deckCards[row_index + 1][card_index - 1] : undefined;
@@ -86,7 +91,7 @@ export function checkDeckCardLock(age) {
                         (thisMinusOne && thisMinusOne.hidden === true && thisEqual === undefined) ||
                         (thisMinusOne && thisMinusOne.hidden === true && thisEqual.hidden === true)) {
                             dispatch({type: 'LOCK_CARD', payload: {
-                                age: 'age2',
+                                age: Ages.age2,
                                 row: row_index,
                                 col: card_index,
                                 lock: false,
@@ -94,7 +99,7 @@ export function checkDeckCardLock(age) {
                             }});
                         } else {
                             dispatch({type: 'LOCK_CARD', payload: {
-                                age: 'age2',
+                                age: Ages.age2,
                                 row: row_index,
                                 col: card_index,
                                 lock: true
@@ -105,7 +110,9 @@ export function checkDeckCardLock(age) {
             },
             age3: () => {
                 const deckCards = state().game.gameDecks.age3;
-                deckCards.forEach((row, row_index) => {
+                Object.keys(deckCards).forEach(row_index => {
+                    row_index = +row_index;
+                    const row = deckCards[row_index];
                     row.forEach((card, card_index) => {
                         let nextUndefined = deckCards[row_index + 1] === undefined;
                         let thisMinusOne = !nextUndefined ? deckCards[row_index + 1][card_index - 1] : undefined;
@@ -117,7 +124,7 @@ export function checkDeckCardLock(age) {
                                 (thisMinusOne && thisMinusOne.hidden === true && thisEqual === undefined) ||
                                 (thisMinusOne && thisMinusOne.hidden === true && thisEqual.hidden === true)) {
                                     dispatch({type: 'LOCK_CARD', payload: {
-                                        age: 'age3',
+                                        age: Ages.age3,
                                         row: row_index,
                                         col: card_index,
                                         lock: false,
@@ -125,7 +132,7 @@ export function checkDeckCardLock(age) {
                                     }});
                             } else {
                                 dispatch({type: 'LOCK_CARD', payload: {
-                                    age: 'age3',
+                                    age: Ages.age3,
                                     row: row_index,
                                     col: card_index,
                                     lock: true
@@ -134,7 +141,7 @@ export function checkDeckCardLock(age) {
                         } else if (row_index === 3 || row_index <= 1) {
                             if (thisEqual.hidden === true && thisPlusOne.hidden === true) {
                                 dispatch({type: 'LOCK_CARD', payload: {
-                                    age: 'age3',
+                                    age: Ages.age3,
                                     row: row_index,
                                     col: card_index,
                                     lock: false,
@@ -142,7 +149,7 @@ export function checkDeckCardLock(age) {
                                 }});
                             } else {
                                 dispatch({type: 'LOCK_CARD', payload: {
-                                    age: 'age3',
+                                    age: Ages.age3s,
                                     row: row_index,
                                     col: card_index,
                                     lock: true
@@ -181,8 +188,8 @@ export function checkAgeFinish() {
 
 function getIndexesOfCard(deck, cardId) {
     let indexes = {};
-    deck.forEach((row, row_index) => {
-        row.forEach((card, card_index) => {
+    Object.keys(deck).forEach(row_index => {
+        deck[row_index].forEach((card, card_index) => {
             if (card.id === cardId) {
                 indexes = {
                     row: row_index,

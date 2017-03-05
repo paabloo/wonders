@@ -44,8 +44,9 @@ class DeckDashboard extends Component {
                         <p>P1: {players[1].gold}</p>
                         <p>P2: {players[2].gold}</p>
                     </div>
-                    {deckCards.map((r, i) =>
-                        <div key={i} className="deck-row">
+                    {Object.keys(deckCards).map(i => {
+                        const r = deckCards[i];
+                        return <div key={i} className="deck-row">
                             {r.map(c =>
                                 <DeckCard
                                     {...c}
@@ -60,7 +61,7 @@ class DeckDashboard extends Component {
                                 </DeckCard>
                             )}
                         </div>
-                    )}
+                    })}
                 </div>
             </div>
         );
@@ -69,7 +70,7 @@ class DeckDashboard extends Component {
 
 DeckDashboard.propTypes = {
     state: PropTypes.object,
-    deckCards: PropTypes.array,
+    deckCards: PropTypes.object,
     age: PropTypes.string,
     activePlayer: PropTypes.number,
     handleBuy: PropTypes.func,
