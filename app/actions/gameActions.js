@@ -149,7 +149,7 @@ export function checkDeckCardLock(age) {
                                 }});
                             } else {
                                 dispatch({type: 'LOCK_CARD', payload: {
-                                    age: Ages.age3s,
+                                    age: Ages.age3,
                                     row: row_index,
                                     col: card_index,
                                     lock: true

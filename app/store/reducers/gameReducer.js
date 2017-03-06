@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
         case 'START_GAME':
             return Object.assign({}, state, {
                 gameInProgress: true,
-                actualAge: Ages.age3,
+                actualAge: Ages.age1,
                 activePlayer: 1
             });
         case 'SWITCH_PLAYER':
