@@ -1,4 +1,6 @@
-const initialState = {
+import Immutable from 'immutable';
+
+const initialState = Immutable.fromJS({
     1: {
         name: 'player_one',
         gold: 7,
@@ -9,16 +11,12 @@ const initialState = {
         gold: 7,
         supply: {}
     }
-};
+});
 
 export default function (state = initialState, action) {
     switch (action.type) {
         case 'UPDATE_GOLD':
-            return Object.assign({}, state, {
-                [action.payload.player]: Object.assign({}, state[action.payload.player], {
-                    gold: state[action.payload.player].gold + action.payload.amount
-                })
-            });
+            return state.updateIn([action.payload.player, 'gold'], gold => gold + action.payload.amount);
         default:
             return state
     }

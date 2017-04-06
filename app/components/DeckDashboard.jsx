@@ -41,8 +41,8 @@ class DeckDashboard extends Component {
             <div className={deckClass}>
                 <div className="game-container">
                     <div className="well">
-                        <p>P1: {players[1].gold}</p>
-                        <p>P2: {players[2].gold}</p>
+                        <p>P1: {players.getIn(['1', 'gold'])}</p>
+                        <p>P2: {players.getIn(['2', 'gold'])}</p>
                     </div>
                     {Object.keys(deckCards).map(i => {
                         const r = deckCards[i];

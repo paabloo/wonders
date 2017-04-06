@@ -1,6 +1,7 @@
 import * as Ages from '../../constants/ages';
+import Immutable from 'immutable';
 
-const initialState = {
+const initialState = Immutable.fromJS({
     gameInProgress: false,
     activePlayer: null,
     actualAge: null,
@@ -11,16 +12,17 @@ const initialState = {
         age3: []
     },
     discardDeck: []
-};
+});
 
 export default function (state = initialState, action) {
+    let store;
     switch (action.type) {
         case 'START_GAME':
-            return Object.assign({}, state, {
-                gameInProgress: true,
-                actualAge: Ages.age1,
-                activePlayer: 1
-            });
+            console.log(state);
+            store = state.set('gameInProgress', true);
+            store = state.set('actualAge', Ages.age1);
+            store = state.set('activePlayer', 1);
+            return store;
         case 'SWITCH_PLAYER':
             return Object.assign({}, state, {
                 activePlayer: state.activePlayer === 1 ? 2 : 1
@@ -30,23 +32,11 @@ export default function (state = initialState, action) {
                 actualAge: state.actualAge === 'age1' ? 'age2' : 'age3'
             });
         case 'FILL_DECK_AGE1':
-            return Object.assign({}, state, {
-                gameDecks: Object.assign({}, state.gameDecks, {
-                    age1: action.payload,
-                })
-            });
+            return state.setIn(['gameDecks', 'age1'], Immutable.fromJS(action.payload));
         case 'FILL_DECK_AGE2':
-            return Object.assign({}, state, {
-                gameDecks: Object.assign({}, state.gameDecks, {
-                    age2: action.payload,
-                })
-            });
+            return state.setIn(['gameDecks', 'age2'], Immutable.fromJS(action.payload));
         case 'FILL_DECK_AGE3':
-            return Object.assign({}, state, {
-                gameDecks: Object.assign({}, state.gameDecks, {
-                    age3: action.payload,
-                })
-            });
+            return state.setIn(['gameDecks', 'age3'], Immutable.fromJS(action.payload));
         case 'DISCARD_CARD':
             return Object.assign({}, state, {
                 discardDeck: [

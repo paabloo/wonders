@@ -51,7 +51,8 @@ export function checkDeckCardLock(age) {
     return (dispatch, state) => {
         const checkFunctions = {
             age1: () => {
-                const deckCards = state().game.gameDecks.age1;
+                const deckCards = state().game.getIn(['gameDecks', 'age1']);
+                debugger;
                 Object.keys(deckCards).forEach(row_index => {
                     row_index = +row_index;
                     const row = deckCards[row_index];
@@ -78,7 +79,7 @@ export function checkDeckCardLock(age) {
                 });
             },
             age2: () => {
-                const deckCards = state().game.gameDecks.age2;
+                const deckCards = state().game.getIn(['gameDecks', 'age2']);
                 Object.keys(deckCards).forEach(row_index => {
                     row_index = +row_index;
                     const row = deckCards[row_index];
@@ -109,7 +110,7 @@ export function checkDeckCardLock(age) {
                 });
             },
             age3: () => {
-                const deckCards = state().game.gameDecks.age3;
+                const deckCards = state().game.getIn(['gameDecks', 'age3']);
                 Object.keys(deckCards).forEach(row_index => {
                     row_index = +row_index;
                     const row = deckCards[row_index];
@@ -205,6 +206,7 @@ function getIndexesOfCard(deck, cardId) {
 export function sellCard(cardId) {
     return (dispatch, state) => {
         const { game } = state();
+        debugger;
         const deck = game.gameDecks[game.actualAge];
         const { row, col, card } = getIndexesOfCard(deck, cardId);
         dispatch({type: 'UPDATE_GOLD', payload: {player: game.activePlayer, amount: 2}});

@@ -6,7 +6,8 @@ import Home from '../components/Home';
 import AgeContainer from '../containers/AgeContainer';
 
 function onGameEnter(nextState, replace) {
-    if (!store.getState().game.gameInProgress) {
+    const inProgress = store.getState().game.get('gameInProgress');
+    if (!inProgress) {
         replace({
             pathname: '/',
             state: { nextPathname: nextState.location.pathname }
