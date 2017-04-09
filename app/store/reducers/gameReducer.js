@@ -15,13 +15,12 @@ const initialState = Immutable.fromJS({
 });
 
 export default function (state = initialState, action) {
-    let store;
+    let store = state;
     switch (action.type) {
         case 'START_GAME':
-            console.log(state);
-            store = state.set('gameInProgress', true);
-            store = state.set('actualAge', Ages.age1);
-            store = state.set('activePlayer', 1);
+            store = store.set('gameInProgress', true);
+            store = store.set('actualAge', Ages.age1);
+            store = store.set('activePlayer', 1);
             return store;
         case 'SWITCH_PLAYER':
             return Object.assign({}, state, {
@@ -32,11 +31,11 @@ export default function (state = initialState, action) {
                 actualAge: state.actualAge === 'age1' ? 'age2' : 'age3'
             });
         case 'FILL_DECK_AGE1':
-            return state.setIn(['gameDecks', 'age1'], Immutable.fromJS(action.payload));
+            return state.setIn(['gameDecks', 'age1'], action.payload);
         case 'FILL_DECK_AGE2':
-            return state.setIn(['gameDecks', 'age2'], Immutable.fromJS(action.payload));
+            return state.setIn(['gameDecks', 'age2'], action.payload);
         case 'FILL_DECK_AGE3':
-            return state.setIn(['gameDecks', 'age3'], Immutable.fromJS(action.payload));
+            return state.setIn(['gameDecks', 'age3'], action.payload);
         case 'DISCARD_CARD':
             return Object.assign({}, state, {
                 discardDeck: [
@@ -45,34 +44,12 @@ export default function (state = initialState, action) {
                 ]
             });
         case 'HIDE_CARD':
-            return Object.assign({}, state, {
-                gameDecks: Object.assign({}, state.gameDecks, {
-                    [state.actualAge]: Object.assign({}, state.gameDecks[state.actualAge], {
-                        [action.payload.row]: [
-                            ...state.gameDecks[state.actualAge][action.payload.row].slice(0, action.payload.col),
-                            Object.assign({}, state.gameDecks[state.actualAge][action.payload.row][action.payload.col], {
-                                hidden: true
-                            }),
-                            ...state.gameDecks[state.actualAge][action.payload.row].slice(action.payload.col + 1)
-                        ]
-                    })
-                })
-            });
+            store = store.setIn(['gameDecks', action.payload.age, action.payload.row, action.payload.col, 'hidden'], true);
+            return store;
         case 'LOCK_CARD':
-            return Object.assign({}, state, {
-                gameDecks: Object.assign({}, state.gameDecks, {
-                    [action.payload.age]: Object.assign({}, state.gameDecks[action.payload.age], {
-                        [action.payload.row]: [
-                            ...state.gameDecks[action.payload.age][action.payload.row].slice(0, action.payload.col),
-                            Object.assign({}, state.gameDecks[action.payload.age][action.payload.row][action.payload.col], {
-                                lock: action.payload.lock,
-                                flip: action.payload.flip === undefined ? state.gameDecks[action.payload.age][action.payload.row][action.payload.col].flip : action.payload.flip
-                            }),
-                            ...state.gameDecks[action.payload.age][action.payload.row].slice(action.payload.col + 1)
-                        ]
-                    })
-                })
-            });
+            store = store.setIn(['gameDecks', action.payload.age, action.payload.row, action.payload.col, 'lock'], action.payload.lock);
+            store = store.updateIn(['gameDecks', action.payload.age, action.payload.row, action.payload.col, 'flip'], flip => action.payload.flip === undefined ? flip : action.payload.flip);
+            return store;
         default:
             return state
     }

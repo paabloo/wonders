@@ -1,4 +1,6 @@
-const deckCards = {
+import Immutable from 'immutable';
+
+const deckCards = Immutable.fromJS({
     age1: [
         {
             id: 1,
@@ -1010,6 +1012,6 @@ const deckCards = {
             }
         }
     ]
-};
+});
 
 export default (state = deckCards) => state;

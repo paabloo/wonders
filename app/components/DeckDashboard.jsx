@@ -44,22 +44,23 @@ class DeckDashboard extends Component {
                         <p>P1: {players.getIn(['1', 'gold'])}</p>
                         <p>P2: {players.getIn(['2', 'gold'])}</p>
                     </div>
-                    {Object.keys(deckCards).map(i => {
-                        const r = deckCards[i];
+                    {deckCards.map((r, i) => {
                         return <div key={i} className="deck-row">
-                            {r.map(c =>
-                                <DeckCard
-                                    {...c}
-                                    key={'card_'+c.id}
-                                    age={age}
-                                    miniMenu={c.id === this.state.cardMenuShowed}
-                                    showMiniMenu={this.showMiniMenu}
-                                    >
-                                        <button className="btn btn-success btn-block" onClick={(e) => {e.stopPropagation(); this.handleBuy(c.id);}}>Kup</button>
-                                        <button className="btn btn-warning btn-block" onClick={(e) => {e.stopPropagation(); this.handleSell(c.id);}}>Sprzedaj</button>
-                                        <button className="btn btn-default btn-block" onClick={(e) => {e.stopPropagation(); this.showMiniMenu(null)}}>Anuluj</button>
-                                </DeckCard>
-                            )}
+                            {r.map(c => {
+                                c = c.toJS();
+                                return (
+                                    <DeckCard
+                                        {...c}
+                                        key={'card_'+c.id}
+                                        age={age}
+                                        miniMenu={c.id === this.state.cardMenuShowed}
+                                        showMiniMenu={this.showMiniMenu}
+                                        >
+                                            <button className="btn btn-success btn-block" onClick={(e) => {e.stopPropagation(); this.handleBuy(c.id);}}>Kup</button>
+                                            <button className="btn btn-warning btn-block" onClick={(e) => {e.stopPropagation(); this.handleSell(c.id);}}>Sprzedaj</button>
+                                            <button className="btn btn-default btn-block" onClick={(e) => {e.stopPropagation(); this.showMiniMenu(null)}}>Anuluj</button>
+                                    </DeckCard>);
+                            })}
                         </div>
                     })}
                 </div>
