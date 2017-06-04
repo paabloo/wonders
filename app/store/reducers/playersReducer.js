@@ -1,6 +1,6 @@
-import Immutable from 'immutable';
+import { fromJS } from 'immutable';
 
-const initialState = Immutable.fromJS({
+const initialState = fromJS({
     1: {
         name: 'player_one',
         gold: 7,
@@ -14,9 +14,11 @@ const initialState = Immutable.fromJS({
 });
 
 export default function (state = initialState, action) {
-    switch (action.type) {
+    const { payload, type } = action;
+    switch (type) {
         case 'UPDATE_GOLD':
-            return state.updateIn([action.payload.player, 'gold'], gold => gold + action.payload.amount);
+            // TODO: avoid using toString method
+            return state.updateIn([payload.player.toString(), 'gold'], gold => gold + payload.amount);
         default:
             return state
     }

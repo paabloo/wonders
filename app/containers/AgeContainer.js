@@ -3,13 +3,13 @@ import DeckDashboard from '../components/DeckDashboard';
 import { buyCard, sellCard } from '../actions/gameActions';
 
 const mapStateToProps = (state) => {
-    const age = state.game.get('actualAge');
+    const age = state.getIn(['game', 'actualAge']);
     return {
         state,
-        players: state.players,
-        activePlayer: state.game.get('activePlayer'),
         age,
-        deckCards: state.game.getIn(['gameDecks', age])
+        players: state.get('players'),
+        activePlayer: state.getIn(['game', 'activePlayer']),
+        deckCards: state.getIn(['game', 'gameDecks', age])
     }
 };
 

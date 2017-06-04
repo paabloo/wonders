@@ -20,7 +20,7 @@ class DeckCard extends Component {
             cardClass.push('hidden--alt');
         }
 
-        console.log(this.props);
+        // console.log(this.props);
 
         return (
             <div className={cardClass.join(' ')} onClick={this.handleClick}>

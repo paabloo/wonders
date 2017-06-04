@@ -5,8 +5,11 @@ import store  from '../store/store';
 import Home from '../components/Home';
 import AgeContainer from '../containers/AgeContainer';
 
+window.store = store;
+
 function onGameEnter(nextState, replace) {
-    const inProgress = store.getState().game.get('gameInProgress');
+    console.log(store);
+    const inProgress = store.getState().getIn(['game', 'gameInProgress']);
     if (!inProgress) {
         replace({
             pathname: '/',

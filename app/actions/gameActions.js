@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 
 export function prepareAgesDecks() {
     return (dispatch, state) => {
-        let deckCardsA1 = state().deckCards.get('age1');
+        let deckCardsA1 = state().getIn(['deckCards', 'age1']);
         let rowsA1 = [];
         deckCardsA1 = deckCardsA1.toJS().sort(function () {return 0.5 - Math.random()});
         deckCardsA1 = deckCardsA1.slice(0, 20);
@@ -15,7 +15,7 @@ export function prepareAgesDecks() {
         rowsA1[4] = deckCardsA1.slice(14, 20);
         rowsA1 = Immutable.fromJS(rowsA1);
         dispatch({type: 'FILL_DECK_AGE1', payload: rowsA1});
-        let deckCardsA2 = state().deckCards.get('age2');
+        let deckCardsA2 = state().getIn(['deckCards', 'age2']);
         let rowsA2 = [];
         deckCardsA2 = deckCardsA2.toJS().sort(function () {return 0.5 - Math.random()});
         deckCardsA2 = deckCardsA2.slice(0, 20);
@@ -26,8 +26,8 @@ export function prepareAgesDecks() {
         rowsA2[4] = deckCardsA2.slice(18, 20);
         rowsA2 = Immutable.fromJS(rowsA2);
         dispatch({type: 'FILL_DECK_AGE2', payload: rowsA2});
-        let deckCardsA3 = state().deckCards.get('age3');
-        let guildCards = state().deckCards.get('guilds');
+        let deckCardsA3 = state().getIn(['deckCards', 'age3']);
+        let guildCards = state().getIn(['deckCards', 'guilds']);
         let rowsA3 = [];
         deckCardsA3 = deckCardsA3.toJS().sort(function () {return 0.5 - Math.random()});
         guildCards = guildCards.toJS().sort(function () {return 0.5 - Math.random()});
@@ -55,7 +55,7 @@ export function checkDeckCardLock(age) {
     return (dispatch, state) => {
         const checkFunctions = {
             age1: () => {
-                const deckCards = state().game.getIn(['gameDecks', 'age1']);
+                const deckCards = state().getIn(['game', 'gameDecks', 'age1']);
                 deckCards.forEach((row, row_index) => {
                     row.forEach((card, card_index) => {
                         if ((deckCards.get(row_index + 1) === undefined) ||
@@ -80,7 +80,7 @@ export function checkDeckCardLock(age) {
                 });
             },
             age2: () => {
-                const deckCards = state().game.getIn(['gameDecks', 'age2']);
+                const deckCards = state().getIn(['game', 'gameDecks', 'age2']);
                 deckCards.forEach((row, row_index) => {
                     row.forEach((card, card_index) => {
                         let nextUndefined = deckCards.get(row_index + 1) === undefined;
@@ -109,7 +109,7 @@ export function checkDeckCardLock(age) {
                 });
             },
             age3: () => {
-                const deckCards = state().game.getIn(['gameDecks', 'age3']);
+                const deckCards = state().getIn(['game', 'gameDecks', 'age3']);
                 deckCards.forEach((row, row_index) => {
                     row.forEach((card, card_index) => {
                         let nextUndefined = deckCards.get(row_index + 1) === undefined;
@@ -165,15 +165,16 @@ export function checkDeckCardLock(age) {
 export function checkAgeFinish() {
     return (dispatch, state) => {
         let finishFlag = true;
-        const { game } = state();
-        const lastRow = game.gameDecks[game.actualAge][0];
+        const game = state().get('game');
+        // const lastRow = game.gameDecks[game.actualAge][0];
+        const lastRow = game.getIn(['gameDecks', game.get('actualAge'), 0]);
         lastRow.forEach(e => {
-            if (!e.hidden) {
+            if (!e.get('hidden')) {
                 finishFlag = false;
             }
         });
         if (finishFlag) {
-            if (game.actualAge === 'age3') {
+            if (game.get('actualAge') === 'age3') {
                 // TODO: implement reducer for this event
                 dispatch({type: 'FINISH_GAME'});
                 hashHistory.push('/summary');
@@ -186,9 +187,9 @@ export function checkAgeFinish() {
 
 function getIndexesOfCard(deck, cardId) {
     let indexes = {};
-    Object.keys(deck).forEach(row_index => {
-        deck[row_index].forEach((card, card_index) => {
-            if (card.id === cardId) {
+    deck.forEach((row, row_index) => {
+        row.forEach((card, card_index) => {
+            if (card.get('id') === cardId) {
                 indexes = {
                     row: row_index,
                     col: card_index,
@@ -202,17 +203,18 @@ function getIndexesOfCard(deck, cardId) {
 
 export function sellCard(cardId) {
     return (dispatch, state) => {
-        const { game } = state();
-        debugger;
-        const deck = game.gameDecks[game.actualAge];
+        const game = state().get('game');
+        const deck = game.getIn(['gameDecks', game.get('actualAge')]);
+        const age = game.get('actualAge');
         const { row, col, card } = getIndexesOfCard(deck, cardId);
-        dispatch({type: 'UPDATE_GOLD', payload: {player: game.activePlayer, amount: 2}});
+        dispatch({type: 'UPDATE_GOLD', payload: {player: game.get('activePlayer'), amount: 2}});
         dispatch({type: 'DISCARD_CARD', payload: card});
         dispatch({type: 'HIDE_CARD', payload: {
             row,
-            col
+            col,
+            age
         }});
-        dispatch(checkDeckCardLock(game.actualAge));
+        dispatch(checkDeckCardLock(age));
         dispatch(checkAgeFinish());
         dispatch({type: 'SWITCH_PLAYER'});
     }

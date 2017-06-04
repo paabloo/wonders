@@ -4,7 +4,7 @@ import MainMenu from '../components/MainMenu';
 
 const mapStateToProps = (state) => {
     return {
-        gameInProgress: state.game.gameInProgress
+        gameInProgress: state.getIn(['game', 'gameInProgress'])
     }
 }
 
@@ -22,4 +22,3 @@ const MainMenuContainer = connect(
 )(MainMenu);
 
 export default MainMenuContainer;
-

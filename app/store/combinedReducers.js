@@ -1,12 +1,12 @@
-import { combineReducers } from 'redux';
+import combineReducers from './combineImmutable';
 import playersReducer from './reducers/playersReducer';
 import gameReducer from './reducers/gameReducer';
 import deckCardsReducer from './reducers/usageElements/deckCards';
 
-const combinedReducers = combineReducers({
+const reducersMap = {
     game: gameReducer,
     players: playersReducer,
     deckCards: deckCardsReducer,
-});
+}
 
-export default combinedReducers;
+export default combineReducers(reducersMap);
