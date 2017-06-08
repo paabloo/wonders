@@ -20,15 +20,14 @@ export default function (state = initialState, action) {
         case 'START_GAME':
             return state
                 .set('gameInProgress', true)
-                .set('actualAge', Ages.age1)
+                .set('actualAge', Ages.age2)
                 .set('activePlayer', 1);
         case 'SWITCH_PLAYER':
             return state
                 .update('activePlayer', player => player === 1 ? 2 : 1);
         case 'NEXT_AGE':
-            return Object.assign({}, state, {
-                actualAge: state.actualAge === 'age1' ? 'age2' : 'age3'
-            });
+            return state
+                .update('actualAge', age => age === 'age1' ? 'age2' : 'age3');
         case 'FILL_DECK_AGE1':
             return state
                 .setIn(['gameDecks', 'age1'], payload);
@@ -39,13 +38,8 @@ export default function (state = initialState, action) {
             return state
                 .setIn(['gameDecks', 'age3'], payload);
         case 'DISCARD_CARD':
-            // return Object.assign({}, state, {
-            //     discardDeck: [
-            //         ...state.discardDeck,
-            //         payload
-            //     ]
-            // });
-            return state;
+            return state
+                .update('discardDeck', deck => deck.push(payload))
         case 'HIDE_CARD':
             return state
                 .setIn(['gameDecks', payload.age, payload.row, payload.col, 'hidden'], true);

@@ -83,11 +83,12 @@ export function checkDeckCardLock(age) {
                 const deckCards = state().getIn(['game', 'gameDecks', 'age2']);
                 deckCards.forEach((row, row_index) => {
                     row.forEach((card, card_index) => {
-                        let nextUndefined = deckCards.get(row_index + 1) === undefined;
-                        let thisMinusOne = deckCards.getIn([row_index + 1, card_index - 1]);
-                        let thisEqual = deckCards.getIn([row_index + 1, card_index]);
+                        const cardMinusOne = card_index - 1 < 0 ? null : card_index;
+                        const nextUndefined = deckCards.get(row_index + 1) === undefined;
+                        const thisMinusOne = deckCards.getIn([row_index + 1, cardMinusOne]);
+                        const thisEqual = deckCards.getIn([row_index + 1, card_index]);
                         if ((nextUndefined) ||
-                        (thisMinusOne === undefined && thisEqual.get('hidden')) ||
+                        (thisMinusOne === undefined && thisEqual && thisEqual.get('hidden')) ||
                         (thisMinusOne && thisMinusOne.get('hidden') && thisEqual === undefined) ||
                         (thisMinusOne && thisMinusOne.get('hidden') && thisEqual.get('hidden'))) {
                             dispatch({type: 'LOCK_CARD', payload: {

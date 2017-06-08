@@ -5,8 +5,6 @@ import store  from '../store/store';
 import Home from '../components/Home';
 import AgeContainer from '../containers/AgeContainer';
 
-window.store = store;
-
 function onGameEnter(nextState, replace) {
     console.log(store);
     const inProgress = store.getState().getIn(['game', 'gameInProgress']);
