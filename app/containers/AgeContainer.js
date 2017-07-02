@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import DeckDashboard from '../components/DeckDashboard';
-import { buyCard, sellCard } from '../actions/gameActions';
+import { buyCard, sellCard } from '../actions/playerActions';
 
 const mapStateToProps = (state) => {
     const age = state.getIn(['game', 'actualAge']);

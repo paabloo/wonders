@@ -256,7 +256,7 @@ const deckCards = Immutable.fromJS({
             name: 'Magazyn kamienia',
             type: 'merchant',
             supply: {
-                'stone_discount': true
+                'stone_discount': 1
             },
             symbol: false,
             cost: {
