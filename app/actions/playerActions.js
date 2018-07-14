@@ -35,12 +35,18 @@ export function sellCard(cardId) {
   }
 }
 
+// TODO:
+/*eslint-disable*/
 export function buyCard(cardId) {
   return (dispatch, state) => {
     const game = state().get('game');
+    const activePlayer = state().getIn(['players', game.get('activePlayer')]);
     const deck = game.getIn(['gameDecks', game.get('actualAge')]);
     const age = game.get('actualAge');
     const { row, col, card } = getIndexesOfCard(deck, cardId);
+    card.get('cost').forEach((amount, supply) => {console.log(supply, amount)});
+    debugger;
+    return;
     console.log('Bought: ', card.toJS());
     dispatch({type: 'HIDE_CARD', payload: {
       row,

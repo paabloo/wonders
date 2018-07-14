@@ -21,10 +21,10 @@ export default function (state = initialState, action) {
       return state
         .set('gameInProgress', true)
         .set('actualAge', Ages.age1)
-        .set('activePlayer', 1);
+        .set('activePlayer', '1');
     case 'SWITCH_PLAYER':
       return state
-        .update('activePlayer', player => player === 1 ? 2 : 1);
+        .update('activePlayer', player => player === '1' ? '2' : '1');
     case 'NEXT_AGE':
       return state
         .update('actualAge', age => age === 'age1' ? 'age2' : 'age3');

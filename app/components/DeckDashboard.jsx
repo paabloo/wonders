@@ -35,8 +35,8 @@ class DeckDashboard extends Component {
 
     render() {
         const { deckCards, age, activePlayer, state, players } = this.props;
-        const deckClass = activePlayer === 1 ? 'p1' : 'p2';
-        console.log(state.toJS());
+        const deckClass = activePlayer === '1' ? 'p1' : 'p2';
+        console.log(state);
         return (
             <div className={deckClass}>
                 <div className="game-container">
@@ -73,7 +73,7 @@ DeckDashboard.propTypes = {
     state: PropTypes.object,
     deckCards: PropTypes.object,
     age: PropTypes.string,
-    activePlayer: PropTypes.number,
+    activePlayer: PropTypes.string,
     handleBuy: PropTypes.func,
     handleSell: PropTypes.func,
     players: PropTypes.object

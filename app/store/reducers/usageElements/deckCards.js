@@ -114,7 +114,7 @@ const deckCards = Immutable.fromJS({
                 'clay': 1
             },
             symbol: false,
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -152,7 +152,7 @@ const deckCards = Immutable.fromJS({
                 'military': 1
             },
             symbol: false,
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -189,7 +189,7 @@ const deckCards = Immutable.fromJS({
                 'stone': 1
             },
             symbol: false,
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -200,7 +200,7 @@ const deckCards = Immutable.fromJS({
                 'wood': 1
             },
             symbol: false,
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -237,7 +237,7 @@ const deckCards = Immutable.fromJS({
                 'cultural': 3
             },
             symbol: 'moon',
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -248,7 +248,7 @@ const deckCards = Immutable.fromJS({
                 'cultural': 3
             },
             symbol: 'mask',
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -272,7 +272,7 @@ const deckCards = Immutable.fromJS({
                 'gold': 4
             },
             symbol: 'jug',
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -328,7 +328,7 @@ const deckCards = Immutable.fromJS({
                 'gold': 6
             },
             symbol: 'barrel',
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -535,7 +535,7 @@ const deckCards = Immutable.fromJS({
                 'papyrus': 1
             },
             symbol: false,
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
@@ -587,7 +587,7 @@ const deckCards = Immutable.fromJS({
                 'glass': 1
             },
             symbol: false,
-            cost: false,
+            cost: {},
             free_build: false
         },
         {
